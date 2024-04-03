@@ -24,7 +24,8 @@ export default class GamificationPlugin extends React.PureComponent {
 
     /** Called on load */
     onLoad() {
-        metapress.addEventListener('gamification.score', this.updateScore)
+        metapress.addEventListener('actionScripter_onObjectAction', this.updateScore)
+        metapress.addEventListener('gamification_onObjectAction', this.updateScore)
 
         // Register UI
         this.totalRef = new ScoreUI()
@@ -45,7 +46,7 @@ export default class GamificationPlugin extends React.PureComponent {
                 score += pointsObject[object].points
             }
         }
-        
+
         this.totalScore = score
 
         let scoreDiv = document.getElementById('scoreTotalDiv')
