@@ -1,6 +1,6 @@
 {
     "name": "metapress-plugin-gamification",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "description": "MetaPress Gamification plugin.",
     "main": "js/loader.js",
     "private": true,
