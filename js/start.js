@@ -127,5 +127,55 @@ export default class GamificationPlugin extends React.PureComponent {
 
         this.loadScore()
     }
+
+    /** AI Knowledge */
+    $ai_getKnowledgeBaseEntries = () => {
+        return [
+            // Deatils about the Gamification Plugin
+            {
+                id: `${this.id}.GamificationPlugin`,
+                type: 'info',
+                name: 'Gamification plugin information',
+                tags: 'gamification plugin, score point, gamification plugin description, gamification plugin information, yellow score',
+                content: `
+                    This is the gamification plugin which tracks points earned by users for certain actions. The accumulated points can be 
+                    seen on the top right corner of the screen. Editors make use of the 'Gamification' modifier to assign points on the 
+                    object with the modifier attached to 'Open Link' interactions, 'Action Scripter' actions and on object click in the 
+                    modifier settings.
+                `,
+            },
+
+            // Score per Action
+            {
+                id: `${this.id}.ScoreBreakDown`,
+                type: 'action',
+                name: 'Get Score Breakdown',
+                tags: 'score breakdown, score per action, score per interactions, gamification points, gamification score',
+                content: `Use this action to get the score breakdown for each actions if any.`,
+                action: () => {
+
+                    if (this.totalScore == 0) return 'No points have yet been gained.'
+
+                    let scoreInfo = JSON.parse(localStorage.getItem('mp.gamification.points'))
+                    let openLink_pts = 0
+                    let actionScripter_pts = 0
+                    let click_pts = 0
+
+                    for (let item in scoreInfo) {
+                        if (scoreInfo[item].source == 'openlink') {
+                            openLink_pts += scoreInfo[item].points
+                        } else if (scoreInfo[item].source == 'actionscripter') {
+                            actionScripter_pts += scoreInfo[item].points
+                        } else if (scoreInfo[item].source == 'click') {
+                            click_pts += scoreInfo[item].points
+                        }
+                    }
+
+                    return `${openLink_pts} gained from Open Link interactions, ${actionScripter_pts} gained from Action Scripter actions 
+                        and ${click_pts} gained from on Object Click, making a total of ${this.totalScore} points.`
+                }
+            },
+        ]
+    }
   
 }   
